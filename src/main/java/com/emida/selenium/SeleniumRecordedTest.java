@@ -59,7 +59,7 @@ public class SeleniumRecordedTest {
                     break;
                 case "3":
                     LOG.log(Level.INFO, "3). Xpath:  {0} Click ", target);
-                    driver.findElement(By.xpath(target)).click();
+                    driver.findElement(By.xpath(param)).click();
                     break;
                 case "4":
                     LOG.info("4). SLEEP");
