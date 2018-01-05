@@ -1,10 +1,6 @@
 package com.emida.selenium;
 
 import com.emida.util.Util;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,19 +80,4 @@ public class SeleniumRecordedTest {
             driver.quit();
         }
     }
-    /*    public void ReadRecordeds(List<Tuple> listRecorded, String folderSelenum, String folderImage) {
-        System.setProperty("webdriver.chrome.driver", folderSelenum);
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        try {
-            for (Tuple item : listRecorded) {
-                Object xpath = item.toArray()[0];
-                Object option = item.toArray()[1];
-                Object value = item.toArray()[2];
-                System.out.println("VALORES " + xpath + option + value);
-            }
-        } catch (Exception ecv) {
-            System.out.println(ecv);
-        }
-    }*/
 }
