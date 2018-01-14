@@ -34,6 +34,7 @@ public class SeleniumRecordedTest {
                 String option = String.valueOf(oOption);
                 String value = String.valueOf(oValue);
                 captureEvent(option, value, xpath, folderImage);  
+                listOptions.add(option);
             }
             captureEvent("6", "", "", "");
         } catch (Exception ex) {
