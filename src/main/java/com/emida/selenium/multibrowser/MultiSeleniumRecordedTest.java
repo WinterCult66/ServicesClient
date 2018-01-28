@@ -21,7 +21,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  *
  * @author krodriguez
  */
-public class MultiSeleniumRecordedTest implements Runnable{
+public class MultiSeleniumRecordedTest implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(MultiSeleniumRecordedTest.class.getName());
     RemoteWebDriver driver = null;
@@ -31,23 +31,24 @@ public class MultiSeleniumRecordedTest implements Runnable{
     List<Tuple> listRecorded;
     String folderImage;
     List listOptions;
-
+    //Map<String, String> mapListOptions = new HashMap<String, String>();
+    List<Object> objectList = new ArrayList<Object>();
 
     @Override
     public void run() {
         try {
             String startTime = Util.getDate2StartThread();
             System.out.println(Thread.currentThread().getName() + " " + "STartTime : " + startTime);
-            listOptions = ReadRecordeds();            
+            ReadRecordeds();
             String endTime = Util.getDate2StartThread();
             System.out.println(Thread.currentThread().getName() + " " + "EndTime : " + endTime);
-            setListOptions(listOptions);
+            //setMapListOptions(mapListOptions);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD ( ) : {0}", ex);
         }
     }
 
-    public List ReadRecordeds() throws MalformedURLException {
+    public void ReadRecordeds() throws MalformedURLException {
 
         //System.setProperty("webdriver.chrome.driver", folderSelenum);
         capabilities = Util.evaluatorBrowser(driverName);
@@ -62,15 +63,15 @@ public class MultiSeleniumRecordedTest implements Runnable{
                 String xpath = String.valueOf(oXpath);
                 String option = String.valueOf(oOption);
                 String value = String.valueOf(oValue);
-                captureEventInit(option, value, xpath, folderImage);
-                listOptions.add(option);
+                captureEventInit(option, value, xpath, folderImage);                
+                objectList.add(option);
             }
             captureEventInit("6", "", "", "");
         } catch (Exception ex) {
             driver.quit();
             LOG.log(Level.INFO, "Error{0}", ex);
         }
-        return listOptions;
+        
     }
 
     private void captureEventInit(String event, String target, String param, String folderImage) {
@@ -114,19 +115,20 @@ public class MultiSeleniumRecordedTest implements Runnable{
         }
     }
 
-    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List listOptions) {
+    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList) {
         this.driverName = driverName;
         this.hubURL = hubURL;
         this.listRecorded = listRecorded;
-        this.folderImage = folderImage;  
-        this.listOptions = listOptions;
-    }
-    
-        public List getListOptions() {
-        return listOptions;
+        this.folderImage = folderImage;
+        this.objectList = objectList;
     }
 
-    public void setListOptions(List listOptions) {
-        this.listOptions = listOptions;
+    public List<Object> getObjectList() {
+        return objectList;
     }
+
+    public void setObjectList(List<Object> objectList) {
+        this.objectList = objectList;
+    }
+
 }

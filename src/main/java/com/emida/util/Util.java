@@ -51,7 +51,7 @@ public class Util {
         if (driverNameOption == 0) {
             driverName = "Chrome";
         } else if (driverNameOption == 1) {
-            driverName = "Explorer";
+            driverName = "Chrome";
         } else {
             driverName = null;
         }
