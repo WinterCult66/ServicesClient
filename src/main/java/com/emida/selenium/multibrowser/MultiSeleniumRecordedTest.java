@@ -43,10 +43,11 @@ public class MultiSeleniumRecordedTest implements Runnable {
     public void run() {
         try {
             startTime = Util.getDate2StartThread();
+            jsonObjectInformation.put("driver", driverName);
             jsonObjectInformation.put("startime", startTime); 
             ReadRecordeds();
             endTime = Util.getDate2StartThread();
-            jsonObjectInformation.put("endtime", endTime);            
+            jsonObjectInformation.put("endtime", endTime);
             jsonObjectInfo2Array.add(jsonObjectInformation);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD ( ) : {0}", ex);
