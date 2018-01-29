@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -31,26 +33,28 @@ public class MultiSeleniumRecordedTest implements Runnable {
     List<Tuple> listRecorded;
     String folderImage;
     List listOptions;
-    //Map<String, String> mapListOptions = new HashMap<String, String>();
     List<Object> objectList = new ArrayList<Object>();
+    String startTime, endTime;
+    JSONObject jsonObjectInformation = new JSONObject();
+    JSONArray jsonObjectInfo2Array = new JSONArray();
+    
 
     @Override
     public void run() {
         try {
-            String startTime = Util.getDate2StartThread();
-            System.out.println(Thread.currentThread().getName() + " " + "STartTime : " + startTime);
+            startTime = Util.getDate2StartThread();
+            jsonObjectInformation.put("startime", startTime); 
             ReadRecordeds();
-            String endTime = Util.getDate2StartThread();
-            System.out.println(Thread.currentThread().getName() + " " + "EndTime : " + endTime);
-            //setMapListOptions(mapListOptions);
+            endTime = Util.getDate2StartThread();
+            jsonObjectInformation.put("endtime", endTime);            
+            jsonObjectInfo2Array.add(jsonObjectInformation);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD ( ) : {0}", ex);
         }
     }
 
-    public void ReadRecordeds() throws MalformedURLException {
+    private void ReadRecordeds() throws MalformedURLException {
 
-        //System.setProperty("webdriver.chrome.driver", folderSelenum);
         capabilities = Util.evaluatorBrowser(driverName);
         driver = new RemoteWebDriver(new URL(hubURL), capabilities);
         driver.manage().window().maximize();
@@ -63,7 +67,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
                 String xpath = String.valueOf(oXpath);
                 String option = String.valueOf(oOption);
                 String value = String.valueOf(oValue);
-                captureEventInit(option, value, xpath, folderImage);                
+                captureEventInit(option, value, xpath, folderImage);
                 objectList.add(option);
             }
             captureEventInit("6", "", "", "");
@@ -71,7 +75,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
             driver.quit();
             LOG.log(Level.INFO, "Error{0}", ex);
         }
-        
+
     }
 
     private void captureEventInit(String event, String target, String param, String folderImage) {
@@ -115,12 +119,13 @@ public class MultiSeleniumRecordedTest implements Runnable {
         }
     }
 
-    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList) {
+    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList, JSONArray jsonObjectInfo2Array) {
         this.driverName = driverName;
         this.hubURL = hubURL;
         this.listRecorded = listRecorded;
         this.folderImage = folderImage;
         this.objectList = objectList;
+        this.jsonObjectInfo2Array = jsonObjectInfo2Array;
     }
 
     public List<Object> getObjectList() {
@@ -130,5 +135,29 @@ public class MultiSeleniumRecordedTest implements Runnable {
     public void setObjectList(List<Object> objectList) {
         this.objectList = objectList;
     }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public JSONArray getJsonObjectInfo2Array() {
+        return jsonObjectInfo2Array;
+    }
+
+    public void setJsonObjectInfo2Array(JSONArray jsonObjectInfo2Array) {
+        this.jsonObjectInfo2Array = jsonObjectInfo2Array;
+    }    
 
 }
