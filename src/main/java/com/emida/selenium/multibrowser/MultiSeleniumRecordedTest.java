@@ -48,7 +48,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
             ReadRecordeds();
             endTime = Util.getDate2StartThread();
             jsonObjectInformation.put("endtime", endTime);
-            jsonObjectInfo2Array.add(jsonObjectInformation);
+            jsonObjectInfo2Array.add(jsonObjectInformation);       
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD ( ) : {0}", ex);
         }
@@ -159,6 +159,5 @@ public class MultiSeleniumRecordedTest implements Runnable {
 
     public void setJsonObjectInfo2Array(JSONArray jsonObjectInfo2Array) {
         this.jsonObjectInfo2Array = jsonObjectInfo2Array;
-    }    
-
+    }
 }
