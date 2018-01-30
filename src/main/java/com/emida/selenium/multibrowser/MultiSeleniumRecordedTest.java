@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -37,18 +38,23 @@ public class MultiSeleniumRecordedTest implements Runnable {
     String startTime, endTime;
     JSONObject jsonObjectInformation = new JSONObject();
     JSONArray jsonObjectInfo2Array = new JSONArray();
-    
+    String uniqueIDGroup = UUID.randomUUID().toString();
 
     @Override
     public void run() {
         try {
+
+            String uniqueID = UUID.randomUUID().toString();
+
             startTime = Util.getDate2StartThread();
+            jsonObjectInformation.put("uniqueid", uniqueID);
+            jsonObjectInformation.put("uniqueidgroup", uniqueIDGroup);
             jsonObjectInformation.put("driver", driverName);
-            jsonObjectInformation.put("startime", startTime); 
+            jsonObjectInformation.put("startime", startTime);
             ReadRecordeds();
             endTime = Util.getDate2StartThread();
             jsonObjectInformation.put("endtime", endTime);
-            jsonObjectInfo2Array.add(jsonObjectInformation);       
+            jsonObjectInfo2Array.add(jsonObjectInformation);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD ( ) : {0}", ex);
         }
@@ -137,21 +143,21 @@ public class MultiSeleniumRecordedTest implements Runnable {
         this.objectList = objectList;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
+//    public String getStartTime() {
+//        return startTime;
+//    }
+//
+//    public void setStartTime(String startTime) {
+//        this.startTime = startTime;
+//    }
+//
+//    public String getEndTime() {
+//        return endTime;
+//    }
+//
+//    public void setEndTime(String endTime) {
+//        this.endTime = endTime;
+//    }
 
     public JSONArray getJsonObjectInfo2Array() {
         return jsonObjectInfo2Array;
@@ -160,4 +166,14 @@ public class MultiSeleniumRecordedTest implements Runnable {
     public void setJsonObjectInfo2Array(JSONArray jsonObjectInfo2Array) {
         this.jsonObjectInfo2Array = jsonObjectInfo2Array;
     }
+
+    public String getUniqueIDGroup() {
+        return uniqueIDGroup;
+    }
+
+    public void setUniqueIDGroup(String uniqueIDGroup) {
+        this.uniqueIDGroup = uniqueIDGroup;
+    }
+    
+    
 }
