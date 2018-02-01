@@ -39,18 +39,15 @@ public class MultiSeleniumRecordedTest implements Runnable {
     JSONObject jsonObjectInformation = new JSONObject();
     JSONArray jsonObjectInfo2Array = new JSONArray();
     String uniqueIDGroup = UUID.randomUUID().toString();
-    List<String> stepByStep = new ArrayList<String>();
-    JSONObject jsonObjectStepByStep = new JSONObject();
-    JSONArray jsonObjectStepByStep2Array = new JSONArray();
     String uniqueID = UUID.randomUUID().toString();
-    int count = 0;
+    int count;
+    
 
     @Override
     public void run() {
         try {
             try {
-                count++;
-                Thread.currentThread().setName("Thread-" + count);
+                Thread.currentThread().setName("Thread-" + Util.getNameDriver(count));
                 String threadName = Thread.currentThread().getName();
                 LOG.log(Level.INFO, "Thread Start " + threadName);
                 startTime = Util.getDate2StartThread();
@@ -65,15 +62,10 @@ public class MultiSeleniumRecordedTest implements Runnable {
                 endTime = Util.getDate2StartThread();
                 jsonObjectInformation.put("endtime", endTime);
                 LOG.log(Level.INFO, "{0} End Time: {1}", new Object[]{threadName, endTime});
+                jsonObjectInfo2Array.add(jsonObjectInformation);
             } catch (Exception ex) {
                 LOG.log(Level.WARNING, "ERROR FROM RUN METHOD INTERN: {0}", ex);
             }
-            jsonObjectInfo2Array.add(jsonObjectInformation);
-
-            jsonObjectStepByStep.put("uniqueid", uniqueID);
-            //jsonObjectStepByStep.put("stepbysetp", stepByStep);
-            jsonObjectStepByStep2Array.add(jsonObjectStepByStep);
-            System.out.println("FROM RUN() " + jsonObjectStepByStep2Array);
         } catch (Exception ex) {
             LOG.log(Level.WARNING, "ERROR FROM RUN METHOD EXTERN: {0}", ex);
         }
@@ -110,34 +102,24 @@ public class MultiSeleniumRecordedTest implements Runnable {
         try {
             switch (event) {
                 case "1":
-                    String first = "Send URL: " + target;
                     LOG.log(Level.INFO, "1). URL:  {0}", target);
-                    jsonObjectStepByStep.put("first", first);
                     driver.get(target);
                     break;
                 case "2":
-                    String second = "Send Value: " + target;
-                    jsonObjectStepByStep.put("second", second);
                     LOG.log(Level.INFO, "2). Xpath:  {0} SEND KEY : {1}", new Object[]{param, target});
                     driver.findElement(By.xpath(param)).sendKeys(target);
                     break;
                 case "3":
-                    String third = "Click in: " + param;
-                    jsonObjectStepByStep.put("third", third);
                     LOG.log(Level.INFO, "3). Xpath:  {0} Click ", param);
                     driver.findElement(By.xpath(param)).click();
                     break;
                 case "4":
                     LOG.info("4). SLEEP");
-                    String fourth = "Sleep Time: " + target;
-                    jsonObjectStepByStep.put("fourth", fourth);
                     int longest = Integer.parseInt(target);
                     Thread.sleep(longest);
                     break;
                 case "5":
                     LOG.info("5). TAKE SCREEN ");
-                    String fifth = "Take photo: " + target;
-                    jsonObjectStepByStep.put("fifth", fifth);
                     Util.takeScreenShot(driver, target, folderImage);
                     break;
                 case "6":
@@ -155,14 +137,14 @@ public class MultiSeleniumRecordedTest implements Runnable {
         }
     }
 
-    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList, JSONArray jsonObjectInfo2Array, JSONArray jsonObjectStepByStep2Array) {
+    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList, JSONArray jsonObjectInfo2Array, int count) {
         this.driverName = driverName;
         this.hubURL = hubURL;
         this.listRecorded = listRecorded;
         this.folderImage = folderImage;
         this.objectList = objectList;
         this.jsonObjectInfo2Array = jsonObjectInfo2Array;
-        this.jsonObjectStepByStep2Array = jsonObjectStepByStep2Array;
+        this.count = count;
     }
 
     public List<Object> getObjectList() {
@@ -187,22 +169,6 @@ public class MultiSeleniumRecordedTest implements Runnable {
 
     public void setUniqueIDGroup(String uniqueIDGroup) {
         this.uniqueIDGroup = uniqueIDGroup;
-    }
-
-    public List<String> getStepByStep() {
-        return stepByStep;
-    }
-
-    public void setStepByStep(List<String> stepByStep) {
-        this.stepByStep = stepByStep;
-    }
-
-    public JSONArray getJsonObjectStepByStep2Array() {
-        return jsonObjectStepByStep2Array;
-    }
-
-    public void setJsonObjectStepByStep2Array(JSONArray jsonObjectStepByStep2Array) {
-        this.jsonObjectStepByStep2Array = jsonObjectStepByStep2Array;
     }
 
 }
