@@ -12,6 +12,9 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Util {
@@ -32,18 +35,21 @@ public class Util {
         }
     }
 
-    public static DesiredCapabilities evaluatorBrowser(String driverName) {
-        DesiredCapabilities capabilities = null;
+    public static WebDriver evaluatorBrowser(String driverName, String folder) {
+        WebDriver driver = null;
         if ("Chrome".equalsIgnoreCase(driverName)) {
-            capabilities = DesiredCapabilities.chrome();
+            System.setProperty("webdriver.chrome.driver", folder);
+            driver = new ChromeDriver();
         } else if ("Explorer".equalsIgnoreCase(driverName)) {
-            capabilities = DesiredCapabilities.internetExplorer();
+            System.setProperty("webdriver.edge.driver", folder);
+            driver = new EdgeDriver();
         } else if ("Firefox".equalsIgnoreCase(driverName)) {
-            capabilities = DesiredCapabilities.firefox();
+            System.setProperty("webdriver.gecko.driver", folder);
+            driver = new FirefoxDriver();
         } else {
-            capabilities = null;
+            driver = null;
         }
-        return capabilities;
+        return driver;
     }
 
     public static String getNameDriver(int driverNameOption) {
@@ -51,11 +57,23 @@ public class Util {
         if (driverNameOption == 0) {
             driverName = "Chrome";
         } else if (driverNameOption == 1) {
-            driverName = "Chrome";
-        } else {
-            driverName = null;
+            driverName = "Explorer";
+        } else if (driverNameOption == 2){
+            driverName = "Firefox";
         }
         return driverName;
+    }
+
+    public static String getFolderSelenium(String folderSeleniumBrowser) {
+        String folder = null;
+        if ("Chrome".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = "D:\\Documents\\Selenium\\chromedriver.exe";
+        } else if ("Explorer".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = "D:\\Documents\\Selenium\\MicrosoftWebDriver.exe";
+        } else if ("Firefox".equalsIgnoreCase(folderSeleniumBrowser)) {
+            folder = "D:\\Documents\\Selenium\\geckodriver.exe";
+        }
+        return folder;
     }
 
     public static String getDate2StartThread() {

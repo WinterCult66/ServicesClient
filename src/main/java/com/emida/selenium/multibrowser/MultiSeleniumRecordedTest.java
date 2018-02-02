@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -27,7 +28,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class MultiSeleniumRecordedTest implements Runnable {
 
     private static final Logger LOG = Logger.getLogger(MultiSeleniumRecordedTest.class.getName());
-    RemoteWebDriver driver = null;
+    //RemoteWebDriver driver = null;
     DesiredCapabilities capabilities = null;
     String driverName;
     String hubURL;
@@ -40,8 +41,9 @@ public class MultiSeleniumRecordedTest implements Runnable {
     JSONArray jsonObjectInfo2Array = new JSONArray();
     String uniqueIDGroup = UUID.randomUUID().toString();
     String uniqueID = UUID.randomUUID().toString();
+    String folder;
     int count;
-    
+    WebDriver driver = null;
 
     @Override
     public void run() {
@@ -73,8 +75,8 @@ public class MultiSeleniumRecordedTest implements Runnable {
 
     private void ReadRecordeds() throws MalformedURLException {
 
-        capabilities = Util.evaluatorBrowser(driverName);
-        driver = new RemoteWebDriver(new URL(hubURL), capabilities);
+        driver = Util.evaluatorBrowser(driverName, folder);
+        //driver = new RemoteWebDriver(new URL(hubURL), capabilities);
         driver.manage().window().maximize();
         List listOptions = new ArrayList();
         try {
@@ -137,7 +139,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
         }
     }
 
-    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList, JSONArray jsonObjectInfo2Array, int count) {
+    public MultiSeleniumRecordedTest(String driverName, String hubURL, List<Tuple> listRecorded, String folderImage, List<Object> objectList, JSONArray jsonObjectInfo2Array, int count,String folder) {
         this.driverName = driverName;
         this.hubURL = hubURL;
         this.listRecorded = listRecorded;
@@ -145,6 +147,7 @@ public class MultiSeleniumRecordedTest implements Runnable {
         this.objectList = objectList;
         this.jsonObjectInfo2Array = jsonObjectInfo2Array;
         this.count = count;
+        this.folder = folder;
     }
 
     public List<Object> getObjectList() {
