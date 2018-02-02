@@ -29,6 +29,7 @@ public class Util {
                 FileUtils.copyFile(imagen, new File(directory.getAbsolutePath() + "\\" + imageName + ".png"));
             } else {
                 throw new IOException("ERROR : La ruta especificada no es un directorio!");
+                
             }
         } catch (IOException ex) {
             LOG.log(Level.WARNING, "ERROR PRINT CAPTURE: {0}", ex);
@@ -62,18 +63,6 @@ public class Util {
             driverName = "Firefox";
         }
         return driverName;
-    }
-
-    public static String getFolderSelenium(String folderSeleniumBrowser) {
-        String folder = null;
-        if ("Chrome".equalsIgnoreCase(folderSeleniumBrowser)) {
-            folder = "D:\\Documents\\Selenium\\chromedriver.exe";
-        } else if ("Explorer".equalsIgnoreCase(folderSeleniumBrowser)) {
-            folder = "D:\\Documents\\Selenium\\MicrosoftWebDriver.exe";
-        } else if ("Firefox".equalsIgnoreCase(folderSeleniumBrowser)) {
-            folder = "D:\\Documents\\Selenium\\geckodriver.exe";
-        }
-        return folder;
     }
 
     public static String getDate2StartThread() {
