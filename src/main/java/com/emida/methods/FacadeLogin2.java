@@ -18,13 +18,14 @@ public class FacadeLogin2 {
 
         WebServicesServiceLocator locator = new WebServicesServiceLocator();
         try {
-            LOG.log(Level.INFO, "FACADE.LOGIN2 - START LOGIN2 SOAP {0}");
+            LOG.log(Level.INFO, "Facade Login2 - Start");
             locator.setEndpointAddress("rpcrouter", url);
             RpcrouterSoapBindingStub binding = (RpcrouterSoapBindingStub) locator.getrpcrouter();
+            LOG.log(Level.INFO, "Facade Login2 - End Success");
             return binding.login2(version, username, password, language);
 
         } catch (Exception e) {
-            LOG.log(Level.INFO, "FACADE.LOGIN2 - ERROR {1}", e);
+            LOG.log(Level.INFO, "Facade Login2 -Error ", e);
             return null;
         }
     }

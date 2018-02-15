@@ -18,13 +18,13 @@ public class FacadePinDistSale {
         WebServicesServiceLocator locator = new WebServicesServiceLocator();
 
         try {
-            LOG.log(Level.INFO, "FACADE.PINDISTSALE - START PINDISTSALE SOAP {0}");
+            LOG.log(Level.INFO, "Facade  PindistSale Start");
             locator.setEndpointAddress("rpcrouter", url);
             RpcrouterSoapBindingStub binding = (RpcrouterSoapBindingStub) locator.getrpcrouter();
+            LOG.log(Level.INFO, "Facade  PindistSale End Success");
             return binding.pinDistSale(version, terminalid, clerkid, productid, accountid, amount, invoiceno, language);
-
         } catch (Exception e) {
-            LOG.log(Level.INFO, "FACADE.PINDISTSALE - ERROR {1}", e);
+            LOG.log(Level.INFO, "Facade  PindistSale - ERROR: ", e);
             return null;
         }
 
